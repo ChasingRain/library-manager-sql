@@ -1,0 +1,20 @@
+doctype html
+html
+  head
+    title= title
+    link(rel='stylesheet', href='/bootstrap/css/bootstrap.min.css')
+    link(rel='stylesheet', href='/bootstrap/css/bootstrap-responsive.min.css')
+    link(rel='stylesheet', href='/stylesheets/style.css')
+    script(src='https://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js')
+    script(src='/bootstrap/js/bootstrap.min.js')
+
+  div(class='header')
+    a(href='/' class='logo') Library Manager
+    div(class='header-right')
+      a(href='/books/all') Books
+      a(href='/loans/all') Loans
+      a(href='/patrons/all') Patrons
+
+
+  body
+    block content

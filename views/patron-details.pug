@@ -1,0 +1,64 @@
+extends layout
+
+
+block content
+  if error
+   each err in error
+     p(class='error')= err.message
+   p(class='error') Try Again
+  each patron in patrons
+   form(class='details-page' method='post', id='update-loan', action='/patron/update')
+      p
+        label(for='id') ID
+          input(id="id", type="integer", name="id", value=`${patron.id}` required readonly="readonly")
+      p
+        label(for='first_name') First Name
+          input(id="first_name", type="text", name="first_name", value=`${patron.first_name}` required)
+      p
+        label(for='last_name') Last Name
+          input(id="last_name", type="text", name="last_name", value=`${patron.last_name}` required)
+      p
+        label(for='address') Address
+          input(id="address", type="text", name="address", value=`${patron.address}` required)
+      p
+        label(for='email') Email
+          input(id="email", type="text", name="email", value=`${patron.email}` required)
+      p
+        label(for='library_id') Library ID
+          input(id="library_id", type="text", name="library_id", value=`${patron.library_id}` required readonly="readonly")
+      p
+        label(for='zip_code') Zip Code
+          input(id="zip_code", type="integer", name="zip_code", value=`${patron.zip_code}` required)
+      p
+        input(type='submit' value='Return')
+   table(class='listings')
+      tablebody
+        tr
+          td
+            p ID
+          td
+            p Book
+          td
+            p Loaned On
+          td
+            p Return By
+          td
+            p Returned On
+          each loan in patron.loans
+                tr
+                  td
+                    a(href = "/loans/" + loan.id)
+                      p= loan.id
+                  td
+                    a(href = "/books/details/" + loan.book_id)
+                      p= loan.book_id
+                  td
+                    p= loan.loaned_on
+                  td
+                    p= loan.return_by
+                  td
+                    if loan.returned_on
+                      p= loan.returned_on
+                    else
+                      a(href = "/loans/" + loan.id)
+                        p Return Book

@@ -1,0 +1,43 @@
+extends layout
+
+
+block content
+  div(class='page-title')
+      h3= title
+      div(class='page-right')
+        a(href='/books/new') Create New Book
+        a(href='/books/all') All
+        a(href='/books/overdue') Overdue
+        a(href='/books/out') Checked Out
+
+  table(class='listings')
+    tablebody
+    tr
+      td
+        a(href = "?filter=id&order=asc")
+          p ID
+      td
+        a(href = "?filter=title&order=asc")
+          p Title
+      td
+        a(href = "?filter=genre&order=asc")
+          p Genre
+      td
+        a(href = "?filter=author&order=asc")
+          p Author
+      td
+        a(href = "?filter=first_published&order=asc")
+          p Published
+      each book in books
+            tr
+              td
+                p= book.id
+              td
+                a(href = "/books/details/" + book.id)
+                  p= book.title
+              td
+                p= book.genre
+              td
+                p= book.author
+              td
+                p= book.first_published

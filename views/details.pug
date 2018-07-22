@@ -1,0 +1,51 @@
+extends layout
+
+
+block content
+  if error
+   each err in error
+     p(class='error')= err.message
+   p(class='error') Try Again
+  each book in books
+    h1= book.title
+     form(class='details-page' method='post', id='update-book', action='/update')
+        p
+          label(for='id') ID
+            input(id="Id", type="integer", name="id", value=`${book.id}` required readonly="readonly")
+        p
+          label(for='author') Author
+            input(id="author", type="text", name="author", value=`${book.author}` required)
+        p
+          label(for='title') Title
+            input(id="title", type="text", name="title", value=`${book.title}` required)
+        p
+          label(for='genre') Genre
+            input(id="genre", type="text", name="genre", value=`${book.genre}` required)
+        p
+          label(for='first_published') First Published
+            input(id="first_published", type="integer", name="first_published", value=`${book.first_published}`)
+        p
+          input(type='submit' value='Update')
+
+    h2 Loan History
+     table(class='loan-history')
+         tbody
+             tr
+                 td Book
+                 td Patron
+                 td Loaned on
+                 td Return by
+                 td Returned on
+             each loan in book.loans
+                 tr
+                     td
+                      a(href='/books/details/' + `${book.id}`) #{book.title}
+                     td
+                      a(href='/patron/' + `${loan.patron_id}`) #{loan.patron_id}
+                     td= loan.loaned_on
+                     td= loan.return_by
+                     if loan.returned_on
+                       td= loan.returned_on
+                     else
+                       td
+                        a(href='/loan/' + `${loan.id}` class='button') Return Book

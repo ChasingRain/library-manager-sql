@@ -1,0 +1,29 @@
+extends layout
+
+
+block content
+      if error
+       each err in error
+         p(class='error')= err.message
+       p(class='error') Try Again
+      form.form-horizontal(method="post", id="newloan", action="/loan/create")
+        label Book
+          br
+          select(id="book", type="integer", name="book_id", placeholder="Book", required)
+            each book in books
+              option(value=`${book.id}`) #{book.id} - #{book.title}
+        label Patron
+          br
+          select(id="patron", type="integer", name="patron_id", placeholder="Patron", required)
+            each patron in patrons
+              option(value=`${patron.id}`) #{patron.id} - #{patron.last_name}, #{patron.first_name}
+        label Loaned On
+          br
+          p= now
+          input.span3(class="hide" id="loaned_on", type="date", name="loaned_on", placeholder=now value=now, required disabled)
+        label Return By
+          br
+          p= due
+          input.span3(class="hide" id="return_by", type="date", name="return_by", placeholder=`${due}` value=`${due}`, required disabled)
+        br
+        input.btn(type="submit", value="Create")

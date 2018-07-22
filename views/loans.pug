@@ -1,0 +1,48 @@
+extends layout
+
+
+block content
+  div(class='page-title')
+      h3= title
+      div(class='page-right')
+        a(href='/loans/new') Create New Loan
+        a(href='/loans/all') All
+        a(href='/loans/overdue') Overdue
+        a(href='/loans/out') Checked Out
+
+  table(class='listings')
+    tablebody
+    tr
+      td
+        p ID
+      td
+        p Book
+      td
+        p Patron
+      td
+        p Loaned On
+      td
+        p Return By
+      td
+        p Returned On
+      each loan in loans
+            tr
+              td
+                a(href = "/loans/" + loan.id)
+                  p= loan.id
+              td
+                a(href = "/books/details/" + loan.book_id)
+                  p= loan.book.title
+              td
+                a(href = "/patron/" + loan.patron_id)
+                  p= loan.patron_id
+              td
+                p= loan.loaned_on
+              td
+                p= loan.return_by
+              td
+                if loan.returned_on
+                  p= loan.returned_on
+                else
+                  a(href = "/loans/" + loan.id)
+                    p Return Book

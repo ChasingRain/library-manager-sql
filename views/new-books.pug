@@ -1,0 +1,23 @@
+extends layout
+
+
+block content
+  if error
+    each err in error
+      p(class='error')= err.message
+    p(class='error') Try Again
+  form.form-horizontal(method="post", id="newbook", action="/create")
+    label Title
+      br
+      input.span3(id="title", type="text", name="title", placeholder="Title", required)
+    label Genre
+      br
+      input.span3(id="genre", type="text", name="genre", placeholder="Genre", required)
+    label Author
+      br
+      input.span3(id="author", type="text", name="author", placeholder="Author", required)
+    label Published Date
+      br
+      input.span3(id="first_published", type="integer", name="first_published", placeholder="First Published")
+    br
+    input.btn(type="submit", value="Create")

@@ -1,0 +1,39 @@
+extends layout
+
+
+block content
+  div(class='page-title')
+      h3= title
+      div(class='page-right')
+        a(href='/patrons/new') Create New Patron
+
+  table(class='listings')
+    tablebody
+    tr
+      td
+        p ID
+      td
+        p Address
+      td
+        p Name
+      td
+        p Email
+      td
+        p Library ID
+      td
+        p Zip Code
+      each patron in patrons
+            tr
+              td
+                p= patron.id
+              td
+                a(href = "/patrons/details/" + patron.id)
+                  p= patron.first_name + " " + patron.last_name
+              td
+                p= patron.address
+              td
+                p= patron.email
+              td
+                p= patron.library_id
+              td
+                p= patron.zip_code
