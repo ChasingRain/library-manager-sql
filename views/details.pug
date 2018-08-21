@@ -41,11 +41,12 @@ block content
                      td
                       a(href='/books/details/' + `${book.id}`) #{book.title}
                      td
-                      a(href='/patron/' + `${loan.patron_id}`) #{loan.patron_id}
+                      a(href='/patrons/details/' + `${loan.patron_id}`) #{loan.patron_id}
                      td= loan.loaned_on
                      td= loan.return_by
-                     if loan.returned_on
-                       td= loan.returned_on
+                     if loan.returned_on === 'Invalid date'
+                      td
+                        button(class='out')
+                          a(href='/loans/' + `${loan.id}` ) Return Book
                      else
-                       td
-                        a(href='/loan/' + `${loan.id}` class='button') Return Book
+                      td= loan.returned_on

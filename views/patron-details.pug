@@ -57,8 +57,8 @@ block content
                   td
                     p= loan.return_by
                   td
-                    if loan.returned_on
-                      p= loan.returned_on
-                    else
+                    if loan.returned_on === 'Invalid date'
                       a(href = "/loans/" + loan.id)
                         p Return Book
+                    else
+                      p= loan.returned_on

@@ -7,6 +7,9 @@ var Sequelize = require('sequelize');
 const Op = Sequelize.Op;
 var router  = express.Router();
 
+app = express();
+app.locals.moment = require('moment');
+
 // copied this function from opensourced code on internet to make sure it incremented mothe and year.
   function addDays(startDate,numberOfDays)
   {
@@ -220,12 +223,14 @@ router.get('/books/out', function(req, res, next) {
  }
 });
 
+
 //all Loans
 router.get('/loans/all', function(req, res, next) {
   Loans.findAll({
-    include: [{ model: Books, as: 'book' }]
+    include: [{ model: Books, as: 'book' }, Patrons]
   })
   .then(function(loans){
+    console.log(JSON.stringify(loans))
     res.render("loans", {loans: loans, title: "List of Loans" });
   }).catch(function(error){
       res.send(500, error);
@@ -236,7 +241,7 @@ router.get('/loans/all', function(req, res, next) {
 // Loans overdue
 router.get('/loans/overdue', function(req, res, next) {
   Loans.findAll({
-    include: [{ model: Books, as: 'book' }],
+    include: [{ model: Books, as: 'book' }, Patrons],
     where: {
       return_by: {
         [Op.lt]: new Date()
@@ -254,7 +259,7 @@ router.get('/loans/overdue', function(req, res, next) {
 // Loans Checked out
 router.get('/loans/out', function(req, res, next) {
   Loans.findAll({
-    include: [{ model: Books, as: 'book' }],
+    include: [{ model: Books, as: 'book' }, Patrons],
     where: {
       returned_on: null
     }
@@ -287,7 +292,7 @@ router.get('/loans/new', function(req, res, next) {
 router.get('/loans/:id', function(req, res, next) {
   var date = new Date();
   Loans.findAll({
-    include: [{ model: Books, as: 'book' }],
+    include: [{ model: Books, as: 'book' }, Patrons],
     where: {
       id: req.params.id
     }

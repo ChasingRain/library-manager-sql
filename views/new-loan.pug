@@ -20,10 +20,8 @@ block content
         label Loaned On
           br
           p= now
-          input.span3(class="hide" id="loaned_on", type="date", name="loaned_on", placeholder=now value=now, required disabled)
         label Return By
           br
           p= due
-          input.span3(class="hide" id="return_by", type="date", name="return_by", placeholder=`${due}` value=`${due}`, required disabled)
         br
         input.btn(type="submit", value="Create")

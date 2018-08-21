@@ -7,21 +7,26 @@ block content
      p(class='error')= err.message
    p(class='error') Try Again
   each loan in loans
-   form(class='details-page' method='post', id='update-loan', action='/loan/update')
-      p
-        label Book Tilte
-          label= loan.book.title
-      p
-        label(for='id') ID
-          input(id="id", type="integer", name="id", value=`${loan.id}` required readonly="readonly")
-      p
-        label(for='patron') Patron
-          input(id="patron", type="integer", name="patron_id", value=`${loan.patron_id}` required readonly="readonly")
-      p
-        label(for='title') Loaned On
-          p= loan.loaned_on
-      p
-        label Returned On
-          input(value=`${now}` readonly="readonly")
-      p
-        input(type='submit' value='Return')
+   form(method='post', id='update-loan', action='/loan/update')
+      h3 Book Title
+          label(class='book-title')= loan.book.title
+      div(class='details-page')
+        p
+          label(for='id') ID
+            input(id="id", type="integer", name="id", value=`${loan.id}` required readonly="readonly")
+        p
+          label(for='patron') Patron
+            input(id="patron", type="integer", name="patron_id", value=`${loan.patron_id}` required readonly="readonly")
+        p
+          label(for='title') Loaned On
+            p= loan.loaned_on
+        if loan.returned_on === 'Invalid date'
+          p
+            label Return Now
+              input(value=`${now}` readonly="readonly" )
+          p
+            input(type='submit' value='Return' class='out')
+        else
+          p
+            label Returned On
+              input(value=`${loan.returned_on}` readonly="readonly")

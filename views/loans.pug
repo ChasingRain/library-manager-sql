@@ -34,8 +34,9 @@ block content
                 a(href = "/books/details/" + loan.book_id)
                   p= loan.book.title
               td
-                a(href = "/patron/" + loan.patron_id)
-                  p= loan.patron_id
+                a(href = "/patrons/details/" + loan.patron_id)
+                  each patron in loan.patrons
+                      p= patron.first_name
               td
                 p= loan.loaned_on
               td

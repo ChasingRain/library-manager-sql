@@ -1,4 +1,5 @@
 'use strict';
+var moment = require('moment');
 module.exports = (sequelize, DataTypes) => {
   var loans = sequelize.define('loans', {
     id: {
@@ -18,19 +19,28 @@ module.exports = (sequelize, DataTypes) => {
       }
     },
     loaned_on: {
-      type: DataTypes.DATE,
+      type: DataTypes.DATEONLY,
+      get: function() {
+        return moment.utc(this.getDataValue('loaned_on')).format('YYYY-MM-DD')
+      },
       validate: {
         isDate: true
       }
     },
     return_by: {
-      type: DataTypes.DATE,
+      type: DataTypes.DATEONLY,
+      get: function() {
+        return moment.utc(this.getDataValue('return_by')).format('YYYY-MM-DD')
+      },
       validate: {
         isDate: true
       }
     },
     returned_on: {
-      type: DataTypes.DATE,
+      type: DataTypes.DATEONLY,
+      get: function() {
+        return moment.utc(this.getDataValue('returned_on')).format('YYYY-MM-DD')
+      },
       validate: {
         isDate: true
       }

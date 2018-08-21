@@ -135,3 +135,12 @@ tr:nth-child(odd){
 .error {
   color: red;
 }
+
+.out {
+  padding: 5px;
+  background-color: yellow;
+}
+
+.book-title {
+  width: 100%;
+}
