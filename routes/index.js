@@ -230,7 +230,6 @@ router.get('/loans/all', function(req, res, next) {
     include: [{ model: Books, as: 'book' }, Patrons]
   })
   .then(function(loans){
-    console.log(JSON.stringify(loans))
     res.render("loans", {loans: loans, title: "List of Loans" });
   }).catch(function(error){
       res.send(500, error);
@@ -275,8 +274,8 @@ router.get('/loans/out', function(req, res, next) {
 router.get('/loans/new', function(req, res, next) {
   var booklist = [];
   var patronlist = [];
-  var date = new Date();
-  var returnBy = addDays(date,7);
+  var date = app.locals.moment().format('YYYY-MM-DD');
+  var returnBy = app.locals.moment().add(7, 'days').format('YYYY-MM-DD');
   Books.findAll().then(function(books){
     booklist = books
     Patrons.findAll().then(function(patrons, books){
@@ -290,7 +289,7 @@ router.get('/loans/new', function(req, res, next) {
 
 //return loan
 router.get('/loans/:id', function(req, res, next) {
-  var date = new Date();
+  var date = app.locals.moment().format('YYYY-MM-DD');
   Loans.findAll({
     include: [{ model: Books, as: 'book' }, Patrons],
     where: {

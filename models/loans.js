@@ -50,9 +50,9 @@ module.exports = (sequelize, DataTypes) => {
   });
   loans.associate = (models) => {
     // 1 to 1 with patron_id
-    loans.hasMany(models.patrons, {
-      targetKey: 'patron_id',
-      foreignKey: 'id',
+    loans.belongsTo(models.patrons, {
+      targetKey: 'id',
+      foreignKey: 'patron_id',
     });
     //1 to 1 with books
     loans.belongsTo(models.books, {
